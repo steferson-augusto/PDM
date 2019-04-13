@@ -50,7 +50,7 @@ export default class PaperExample extends React.Component {
   };
 
   async componentDidMount() {
-    StatusBar.setBarStyle('light-content');
+    StatusBar.setBarStyle('light-content')
 
     try {
       const prefString = await AsyncStorage.getItem('preferences');
