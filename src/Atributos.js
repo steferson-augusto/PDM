@@ -13,6 +13,7 @@ export default class Atributos extends React.Component {
         visible: false,
         dialog: "",
         indice: null,
+        valor: 0,
         snack: {
             status: false,
             text: ''
@@ -40,7 +41,8 @@ export default class Atributos extends React.Component {
     }
 
     _openDialog = (dialog, indice) => {
-        this.setState({ visible: true, dialog, indice })
+        let atributo = this.state.atributos
+        this.setState({ visible: true, dialog, indice, valor: atributo[dialog][indice] })
     }
 
     _closeDialog = () => this.setState({ visible: false, dialog: '' })
@@ -114,8 +116,8 @@ export default class Atributos extends React.Component {
                     })}
                 </List.Section>
                 <DialogAtributos visible={this.state.visible} close={this._closeDialog}
-                    atributo={this.state.dialog} onUpEstagio={this.upEstagio}
-                    onDownEstagio={this.downEstagio} />
+                    atributo={this.state.dialog} valor={this.state.valor} 
+                    onUpEstagio={this.upEstagio} onDownEstagio={this.downEstagio} />
                 <Snackbar
                     visible={this.state.snack.status}
                     onDismiss={() => this.setState({ snack: {status: false, text: ""} })}

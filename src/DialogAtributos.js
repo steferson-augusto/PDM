@@ -12,7 +12,7 @@ export default class DialogAtributos extends React.Component {
     }
 
     render() {
-        const { visible, close, atributo, onUpEstagio, onDownEstagio } = this.props
+        const { visible, close, atributo, onUpEstagio, onDownEstagio, valor } = this.props
         return (
             <Portal>
                 <Dialog onDismiss={close} visible={visible}>
@@ -20,10 +20,12 @@ export default class DialogAtributos extends React.Component {
                     <Dialog.ScrollArea style={{ maxHeight: 170, paddingHorizontal: 0 }}>
                         <ScrollView>
                             <View style={styles.container}>
-                                <Button icon="keyboard-arrow-up" mode="outlined" onPress={onUpEstagio}>
+                                <Button icon="keyboard-arrow-up" mode="outlined" 
+                                onPress={onUpEstagio} disabled={valor==10} >
                                     Aumentar estágio
                                 </Button>
-                                <Button icon="keyboard-arrow-down" mode="outlined" onPress={onDownEstagio}>
+                                <Button icon="keyboard-arrow-down" mode="outlined"
+                                onPress={onDownEstagio}  disabled={valor==0} >
                                     Diminuir estágio
                                 </Button>
                             </View>
