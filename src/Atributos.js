@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { Appbar, List, IconButton, TextInput, Snackbar } from 'react-native-paper'
+import { View, ActivityIndicator, StyleSheet } from 'react-native'
+import { Appbar, List, IconButton, TextInput, Snackbar, Colors } from 'react-native-paper'
 import { atributos } from './services/firebase'
 import DialogAtributos from './DialogAtributos'
 
@@ -10,6 +10,7 @@ export default class Atributos extends React.Component {
         atributos: [],
         labels: [],
         expanded: true,
+        loading: true,
         visible: false,
         dialog: "",
         indice: null,
@@ -36,12 +37,12 @@ export default class Atributos extends React.Component {
                     atributos[attr.label] = attr.dados
                     labels.push(attr.label)
                 })
-                this.setState({ atributos, labels })
+                this.setState({ atributos, labels, loading: false })
             })
     }
 
     _openDialog = (dialog, indice) => {
-        let atributo = this.state.atributos
+        const atributo = this.state.atributos
         this.setState({ visible: true, dialog, indice, valor: atributo[dialog][indice] })
     }
 
@@ -61,6 +62,18 @@ export default class Atributos extends React.Component {
         this.saveAtributos(atributo)
     }
 
+    addDado = () => {
+        console.log("Add dado")
+        let { atributos, dialog} = this.state
+        console.log(atributos[dialog])
+        atributos[dialog].push(0)
+        this.saveAtributos(atributos)
+    }
+
+    delDado = () => {
+        console.log("Del dado")
+    }
+
     saveAtributos(attrs) {
         const docRef = atributos
         let obj = this.state.labels.map(l => {
@@ -73,9 +86,9 @@ export default class Atributos extends React.Component {
         docRef.update({
             atributos: obj
         }).then(() => {
-            this.setState({ visible: false, snack: {status: true, text: "Salvo com sucesso"} })
+            this.setState({ visible: false, snack: { status: true, text: "Salvo com sucesso" } })
         }).catch(() => {
-            this.setState({ visible: false, snack: {status: true, text: "Falha ao salvar as informações"} })
+            this.setState({ visible: false, snack: { status: true, text: "Falha ao salvar as informações" } })
         })
     }
 
@@ -86,51 +99,68 @@ export default class Atributos extends React.Component {
                 <Appbar.Header style={[{ backgroundColor: color }]}>
                     <Appbar.Content title="Atributos" />
                 </Appbar.Header>
-
-                <List.Section>
-                    {this.state.labels.map(l => {
-                        return (
-                            <List.Accordion title={l} key={l}
-                                left={props => <List.Icon {...props} icon="help" />}>
-                                <View style={styles.listContainer}>
-                                    {this.state.atributos[l].map((attr, i) => {
-                                        return (
-                                            <View key={l + i} style={styles.container}>
-                                                <TextInput style={styles.input}
-                                                    label={"Dado " + (i + 1)}
-                                                    mode='outlined'
-                                                    value={this.state.dados[attr]}
-                                                    disabled={true}
-                                                />
-                                                <IconButton style={styles.icon}
-                                                    icon="more-vert"
-                                                    size={20}
-                                                    onPress={() => this._openDialog(l, i)}
-                                                />
-                                            </View>
-                                        )
-                                    })}
-                                </View>
-                            </List.Accordion>
-                        )
-                    })}
-                </List.Section>
-                <DialogAtributos visible={this.state.visible} close={this._closeDialog}
-                    atributo={this.state.dialog} valor={this.state.valor} 
-                    onUpEstagio={this.upEstagio} onDownEstagio={this.downEstagio} />
-                <Snackbar
-                    visible={this.state.snack.status}
-                    onDismiss={() => this.setState({ snack: {status: false, text: ""} })}
-                    duration={Snackbar.DURATION_MEDIUM}
-                >
-                    {this.state.snack.text}
-                </Snackbar>
+                {this.state.loading ? (
+                    <View style={styles.containerLoading}>
+                        <ActivityIndicator
+                            color={Colors.indigo500}
+                            size={100}
+                            style={{ marginVertical: 20 }}
+                        />
+                    </View>
+                ) : (
+                    <View>
+                        <List.Section>
+                            {this.state.labels.map(l => {
+                                return (
+                                    <List.Accordion title={l} key={l}
+                                        left={props => <List.Icon {...props} icon="help" />}>
+                                        <View style={styles.listContainer}>
+                                            {this.state.atributos[l].map((attr, i) => {
+                                                return (
+                                                    <View key={l + i} style={styles.container}>
+                                                        <TextInput style={styles.input}
+                                                            label={"Dado " + (i + 1)}
+                                                            mode='outlined'
+                                                            value={this.state.dados[attr]}
+                                                            disabled={true}
+                                                        />
+                                                        <IconButton style={styles.icon}
+                                                            icon="more-vert"
+                                                            size={20}
+                                                            onPress={() => this._openDialog(l, i)}
+                                                        />
+                                                    </View>
+                                                )
+                                            })}
+                                        </View>
+                                    </List.Accordion>
+                                )
+                            })}
+                        </List.Section>
+                        <DialogAtributos visible={this.state.visible} close={this._closeDialog}
+                            atributo={this.state.dialog} valor={this.state.valor}
+                            onUpEstagio={this.upEstagio} onDownEstagio={this.downEstagio}
+                            onAddDado={this.addDado} onDelDado={this.delDado} />
+                        <Snackbar
+                            visible={this.state.snack.status}
+                            onDismiss={() => this.setState({ snack: { status: false, text: "" } })}
+                            duration={Snackbar.DURATION_MEDIUM}
+                        >
+                            {this.state.snack.text}
+                        </Snackbar>
+                    </View>
+                )}
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    containerLoading: {
+        minHeight: "60%",
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     listContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -145,7 +175,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     input: {
-
+        height: 45,
+        justifyContent: "center"
     },
     icon: {
         flex: 1

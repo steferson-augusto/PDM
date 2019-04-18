@@ -12,7 +12,7 @@ export default class DialogAtributos extends React.Component {
     }
 
     render() {
-        const { visible, close, atributo, onUpEstagio, onDownEstagio, valor } = this.props
+        const { visible, close, atributo, onUpEstagio, onDownEstagio, valor, onAddDado, onDelDado } = this.props
         return (
             <Portal>
                 <Dialog onDismiss={close} visible={visible}>
@@ -25,15 +25,21 @@ export default class DialogAtributos extends React.Component {
                                     Aumentar estágio
                                 </Button>
                                 <Button icon="keyboard-arrow-down" mode="outlined"
-                                onPress={onDownEstagio}  disabled={valor==0} >
+                                onPress={onDownEstagio} disabled={valor==0} >
                                     Diminuir estágio
+                                </Button>
+                                <Button icon="add" mode="outlined" onPress={onAddDado}>
+                                    Adicionar dado
+                                </Button>
+                                <Button icon="remove" mode="outlined" onPress={onDelDado}>
+                                    Remover dado
                                 </Button>
                             </View>
                         </ScrollView>
                     </Dialog.ScrollArea>
                 </Dialog>
             </Portal>
-        );
+        )
     }
 }
 
