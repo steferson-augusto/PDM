@@ -1,19 +1,20 @@
 {
-  "name": "MMMMSONME",
+  "name": "minhaficha",
   "version": "0.0.0",
   "description": "callstack/react-native-paper @ Nov 8, 2018",
-  "author": null,
+  "author": "Steferson Augusto",
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "dependencies": {
-    "expo": "^31.0.0",
-    "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "@callstack/react-theme-provider": "^1.0.7",
     "color": "^2.0.1",
     "create-react-context": "^0.2.3",
+    "expo": "^31.0.0",
+    "firebase": "^5.9.4",
     "prop-types": "^15.0.0",
+    "react": "16.5.0",
     "react-lifecycles-compat": "^3.0.4",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-paper": "2.15.2",
     "react-navigation": "^2.18.2"
   }

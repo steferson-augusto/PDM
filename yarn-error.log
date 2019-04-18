@@ -1,0 +1,45 @@
+Arguments: 
+  D:\nodejs\node.exe D:\ProgramFiles\bin\yarn.js add react-native-firebase
+
+PATH: 
+  C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;D:\Git\cmd;D:\nodejs\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;D:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Java\jdk1.8.0_201\bin;D:\ProgramFiles\AVD\platform-tools;D:\ProgramFiles\AVD\emulator;D:\ProgramFiles\AVD\tools;D:\ProgramFiles\AVD\tools\bin;D:\ProgramFiles\bin\;C:\Users\Steferson\AppData\Local\Microsoft\WindowsApps;C:\Users\Steferson\AppData\Roaming\npm;D:\Microsoft VS Code\bin;C:\Users\Steferson\AppData\Roaming\Composer\vendor\bin;C:\Users\Steferson\AppData\Local\Yarn\bin
+
+Yarn version: 
+  1.15.2
+
+Node version: 
+  10.15.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, scandir 'C:\Users\Steferson\Desktop\React Native\PDM\node_modules\@types'
+
+npm manifest: 
+  {
+    "name": "minhaficha",
+    "version": "0.0.0",
+    "description": "callstack/react-native-paper @ Nov 8, 2018",
+    "author": "Steferson Augusto",
+    "private": true,
+    "main": "node_modules/expo/AppEntry.js",
+    "dependencies": {
+      "expo": "^31.0.0",
+      "react": "16.5.0",
+      "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
+      "@callstack/react-theme-provider": "^1.0.7",
+      "color": "^2.0.1",
+      "create-react-context": "^0.2.3",
+      "prop-types": "^15.0.0",
+      "react-lifecycles-compat": "^3.0.4",
+      "react-native-paper": "2.15.2",
+      "react-navigation": "^2.18.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

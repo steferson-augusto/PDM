@@ -1,53 +1,23 @@
 /* @flow */
 
-import { KeepAwake, Util } from 'expo';
-import * as React from 'react';
-import { StatusBar, I18nManager, AsyncStorage, Platform } from 'react-native';
+import { KeepAwake, Util } from 'expo'
+import * as React from 'react'
+import { StatusBar, I18nManager, AsyncStorage, Platform } from 'react-native'
 import {
   Provider as PaperProvider,
   DarkTheme,
   DefaultTheme,
-} from 'react-native-paper';
-import createReactContext from 'create-react-context';
-import { createDrawerNavigator } from 'react-navigation';
-import RootNavigator from './src/RootNavigator';
-//import createStackNavigator from './src/RootNavigator';
-import DrawerItems from './DrawerItems';
-import type { Theme } from 'react-native-paper';
-
-type State = {
-  theme: Theme,
-  rtl: boolean,
-};
+} from 'react-native-paper'
+import createReactContext from 'create-react-context'
+import ButtomNavigationExample from './src/BottomNavigationExample'
 
 const PreferencesContext = createReactContext();
-
-const App = createDrawerNavigator(
-  { Home: { screen: RootNavigator } },
-  {
-    contentComponent: () => (
-      <PreferencesContext.Consumer>
-        {preferences => (
-          <DrawerItems
-            toggleTheme={preferences.theme}
-            toggleRTL={preferences.rtl}
-            isRTL={preferences.isRTL}
-            isDarkTheme={preferences.isDarkTheme}
-          />
-        )}
-      </PreferencesContext.Consumer>
-    ),
-    // set drawerPosition to support rtl toggle on android
-    drawerPosition:
-      Platform.OS === 'android' && (I18nManager.isRTL ? 'right' : 'left'),
-  }
-);
 
 export default class PaperExample extends React.Component {
   state = {
     theme: DefaultTheme,
     rtl: I18nManager.isRTL,
-  };
+  }
 
   async componentDidMount() {
     StatusBar.setBarStyle('light-content')
@@ -69,40 +39,6 @@ export default class PaperExample extends React.Component {
     }
   }
 
-  _savePreferences = async () => {
-    try {
-      AsyncStorage.setItem(
-        'preferences',
-        JSON.stringify({
-          theme: this.state.theme === DarkTheme ? 'dark' : 'light',
-          rtl: this.state.rtl,
-        })
-      );
-    } catch (e) {
-      // ignore error
-    }
-  };
-
-  _toggleTheme = () =>
-    this.setState(
-      state => ({
-        theme: state.theme === DarkTheme ? DefaultTheme : DarkTheme,
-      }),
-      this._savePreferences
-    );
-
-  _toggleRTL = () =>
-    this.setState(
-      state => ({
-        rtl: !state.rtl,
-      }),
-      async () => {
-        await this._savePreferences();
-
-        I18nManager.forceRTL(this.state.rtl);
-        Util.reload();
-      }
-    );
 
   render() {
     return (
@@ -115,7 +51,7 @@ export default class PaperExample extends React.Component {
             isDarkTheme: this.state.theme === DarkTheme,
           }}
         >
-          <App
+          <ButtomNavigationExample
             persistenceKey={
               process.env.NODE_ENV !== 'production'
                 ? 'NavigationStateDEV'

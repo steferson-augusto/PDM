@@ -1,61 +1,34 @@
 /* @flow */
 
 import * as React from 'react';
-import { ScrollView, View, Image, Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { BottomNavigation } from 'react-native-paper';
+import Atributos from './Atributos'
+import Itens from './Itens'
+import Pericias from './Pericias'
 
-type State = {
-  index: number,
-  routes: Array<{
-    key: string,
-    title: string,
-    icon: string,
-    color: string,
-  }>,
-};
-
-const PhotoGallery = ({ route }) => {
-  const PHOTOS = Array.from({ length: 24 }).map(
-    (_, i) => `https://unsplash.it/300/300/?random&__id=${route.key}${i}`
-  );
-
-  return (
-    <ScrollView contentContainerStyle={styles.content}>
-      {PHOTOS.map(uri => (
-        <View key={uri} style={styles.item}>
-          <Image source={{ uri }} style={styles.photo} />
-        </View>
-      ))}
-    </ScrollView>
-  );
-};
-
-export default class ButtomNavigationExample extends React.Component<
-  {},
-  State
-> {
+export default class ButtomNavigationExample extends React.Component {
   static title = 'Bottom Navigation';
 
   state = {
     index: 0,
     routes: [
-      { key: 'album', title: 'Album', icon: 'photo-album', color: '#6200ee' },
       {
-        key: 'library',
-        title: 'Library',
-        icon: 'inbox',
+        key: 'atributos',
+        title: 'Atributos',
+        icon: 'fitness-center',
         color: '#2962ff',
       },
       {
-        key: 'favorites',
-        title: 'Favorites',
-        icon: 'favorite',
+        key: 'pericias',
+        title: 'Perícias',
+        icon: 'build',
         color: '#00796b',
       },
       {
-        key: 'purchased',
-        title: 'Purchased',
-        icon: 'shop',
+        key: 'itens',
+        title: 'Itens',
+        icon: 'work',
         color: '#c51162',
       },
     ],
@@ -63,16 +36,19 @@ export default class ButtomNavigationExample extends React.Component<
 
   render() {
     return (
+      
+        
       <BottomNavigation
         navigationState={this.state}
         onIndexChange={index => this.setState({ index })}
         renderScene={BottomNavigation.SceneMap({
-          album: PhotoGallery,
-          library: PhotoGallery,
-          favorites: PhotoGallery,
-          purchased: PhotoGallery,
+          atributos: Atributos,
+          pericias: Pericias,
+          itens: Itens,
         })}
-      />
+      >
+      </BottomNavigation>
+    
     );
   }
 }
