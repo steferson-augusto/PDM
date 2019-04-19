@@ -1,8 +1,10 @@
 import { createStore, combineReducers } from 'redux'
 import atributoReducer from './reducers/atributo'
+import loadingReducer from './reducers/loading'
 
 const reducers = combineReducers({
-    atributos: atributoReducer
+    atributos: atributoReducer,
+    loading: loadingReducer
 })
 
 const storeConfig = () => {

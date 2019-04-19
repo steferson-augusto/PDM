@@ -4,6 +4,7 @@ import { BottomNavigation } from 'react-native-paper'
 import { doc } from 'rxfire/firestore'
 import { atributos as attrFire } from './services/firebase'
 import { update } from './store/actions/atributo'
+import { loadingAtributos } from './store/actions/loading'
 import Atributos from './Atributos'
 import Itens from './Itens'
 import Pericias from './Pericias'
@@ -11,7 +12,7 @@ import Pericias from './Pericias'
 class ButtomNavigationExample extends React.Component {
   static title = 'Bottom Navigation';
   state = {
-    index: 1,
+    index: 0,
     routes: [
       {
         key: 'atributos',
@@ -38,13 +39,14 @@ class ButtomNavigationExample extends React.Component {
     doc(attrFire).subscribe(snapshot => {
       let atributos = []
       let labels = []
+      let icons = []
       snapshot.data().atributos.map(attr => {
         atributos[attr.label] = attr.dados
+        icons[attr.label] = attr.icon
         labels.push(attr.label)
       })
-      //this.setState({ atributos, labels, loading: false })
-      //update store
-      this.props.onUpdate({atributos, labels})
+      this.props.onUpdate({atributos, labels, icons})
+      this.props.loadingAtributos(false)
     })
   }
 
@@ -66,7 +68,8 @@ class ButtomNavigationExample extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-      onUpdate: atributos => dispatch(update(atributos))
+      onUpdate: atributos => dispatch(update(atributos)),
+      loadingAtributos: loading => dispatch(loadingAtributos(loading)),
   }
 }
 
