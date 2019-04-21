@@ -2,9 +2,9 @@
   "expoServerPort": 19000,
   "expoServerNgrokUrl": "https://yt-kqp.steferson.pdm.exp.direct",
   "packagerNgrokUrl": "https://packager.yt-kqp.steferson.pdm.exp.direct",
-  "ngrokPid": 5132,
+  "ngrokPid": 1756,
   "devToolsPort": 19002,
   "packagerPort": 19001,
-  "packagerPid": 10812,
+  "packagerPid": 12264,
   "webpackServerPort": null
 }
