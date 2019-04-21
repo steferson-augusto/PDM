@@ -20,3 +20,4 @@ export default firebase
 
 export const atributos = firebase.firestore().collection("atributos").doc('7dQjDsjbqoxwF5XfCY2w')
 export const pericias = firebase.firestore().collection("pericias").doc('qKWDr9q3ia8I2MqxOUR9')
+export const armazens = firebase.firestore().collection("armazem").doc('a9EQe9Q0Gf39xQ1Xba7B')

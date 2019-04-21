@@ -2,8 +2,8 @@ import React from 'react'
 import { ScrollView, View, StyleSheet } from 'react-native'
 import { Button, Portal, Dialog } from 'react-native-paper'
 import { connect } from 'react-redux'
-import { fire } from './store/actions/atributo'
-import { loadingAtributos } from './store/actions/loading'
+import { fire } from '../store/actions/atributo'
+import { loadingAtributos } from '../store/actions/loading'
 
 class DialogAtributos extends React.Component {
     state = {

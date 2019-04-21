@@ -5,3 +5,7 @@ export const LOAD_ATRIBUTOS = 'LOAD_ATRIBUTOS'
 export const UPDATE_PERICIAS = 'UPDATE_PERICIAS'
 export const FIRE_PERICIAS = 'FIRE_PERICIAS'
 export const LOAD_PERICIAS = 'LOAD_PERICIAS'
+
+export const UPDATE_ITENS = 'UPDATE_ITENS'
+export const FIRE_ITENS = 'FIRE_ITENS'
+export const LOAD_ITENS = 'LOAD_ITENS'

@@ -1,9 +1,9 @@
-import { LOAD_ATRIBUTOS, LOAD_PERICIAS } from '../actions/actionTypes'
+import { LOAD_ATRIBUTOS, LOAD_PERICIAS, LOAD_ITENS } from '../actions/actionTypes'
 
 const initialState = {
     atributos: true,
     pericias: true,
-    itens: false,
+    itens: true,
 }
 
 const reducer = (state = initialState, action) => {
@@ -17,6 +17,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 pericias: action.payload
+            }
+        case LOAD_ITENS:
+            return {
+                ...state,
+                itens: action.payload
             }
         default:
             return state
