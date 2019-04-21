@@ -16,7 +16,6 @@ class Itens extends React.Component {
     _closeDialog = () => this.setState({ visibleItem: false, visibleArmazem: false })
 
     render() {
-        // const color = "#c51162"
         const { armazens } = this.props
         return (
             <View>
@@ -74,7 +73,6 @@ class Itens extends React.Component {
                                                 onPress={() => this.setState({ visibleArmazem: true, armazem: index })}
                                             />
                                         </View>
-                                        
                                     </View>
                                 </List.Accordion>
                             )
