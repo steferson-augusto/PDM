@@ -1,13 +1,15 @@
 import React from 'react'
-import { View, ActivityIndicator, FlatList, StyleSheet } from 'react-native'
-import { Appbar, List, IconButton, TextInput, Colors } from 'react-native-paper'
+import { View, ActivityIndicator, StyleSheet, FlatList } from 'react-native'
+import { Appbar, List, IconButton, TextInput, Colors, FAB } from 'react-native-paper'
 import { connect } from 'react-redux'
-import DialogAtributos from './DialogAtributos'
+import DialogPericias from './DialogPericias'
+import DialogNewPericia from './DialogNewPericia'
 
-class Atributos extends React.Component {
+class Pericias extends React.Component {
     state = {
         expanded: true,
         visible: false,
+        visibleNew: false,
         dado: null,
         indice: null,
         snack: {
@@ -18,17 +20,19 @@ class Atributos extends React.Component {
 
     _handlePress = () => this.setState({ expanded: !this.state.expanded })
 
+    _openDialogNew = () => this.setState({ visibleNew: true })
+
     _openDialog = (indice, dado) => this.setState({ visible: true, dado, indice })
 
-    _closeDialog = () => this.setState({ visible: false, dado: null })
+    _closeDialog = () => this.setState({ visible: false, visibleNew: false, dado: null })
 
     render() {
         const dados = ['d4', 'd6', 'd8', 'd10', 'd12', 'd12 +1', 'd12 +2', 'd12 +3', 'd12 +4', 'd12 +5', 'd12 +6']
-        const { atributos } = this.props
+        const { pericias } = this.props
         return (
             <View>
                 <Appbar.Header contentContainerStyle={styles.contentScroll}>
-                    <Appbar.Content title="Atributos" />
+                    <Appbar.Content title="Perícias" />
                     {this.props.loading &&
                         <ActivityIndicator
                             color={Colors.lightBlue100}
@@ -37,21 +41,20 @@ class Atributos extends React.Component {
                         />
                     }
                 </Appbar.Header>
-                <View>
+                <View style={{ minHeight: "87%" }}>
                     <FlatList
                         style={{ height: 500 }} //deixar dinamico senão scroll pode não funcionar
-                        data={atributos}
+                        data={pericias}
                         keyExtractor={(item, index) => `${index}`}
                         renderItem={({ item, index }) => {
                             return (
-                                <List.Accordion title={item.label} key={index}
-                                    left={props => <List.Icon {...props} icon={item.icon} />}>
+                                <List.Accordion title={item.label} key={item.label}>
                                     <View style={styles.listContainer}>
                                         {item.dados.map((dado, i) => {
                                             return (
                                                 <View key={item.label + i} style={styles.container}>
                                                     <TextInput style={styles.input}
-                                                        label={`Dado ${i + 1}`}
+                                                        label={"Dado " + (i + 1)}
                                                         mode='outlined'
                                                         value={dados[dado]}
                                                         disabled={true}
@@ -69,10 +72,15 @@ class Atributos extends React.Component {
                             )
                         }}
                     />
+                    <FAB
+                        style={styles.fab}
+                        icon="add"
+                        onPress={() => this._openDialogNew()}
+                    />
+                    <DialogNewPericia visible={this.state.visibleNew} close={this._closeDialog} />
                     {this.state.visible &&
-                        <DialogAtributos visible={this.state.visible} close={this._closeDialog}
-                            dado={this.state.dado} indice={this.state.indice}
-                        />
+                        <DialogPericias visible={this.state.visible} close={this._closeDialog}
+                            dado={this.state.dado} indice={this.state.indice} />
                     }
                 </View>
             </View>
@@ -108,14 +116,21 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginLeft: 0,
-    }
+    },
+    fab: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 0,
+        backgroundColor: Colors.green700
+    },
 })
 
-const mapStateToProps = ({ atributos, loading }) => {
+const mapStateToProps = ({ pericias, loading }) => {
     return {
-        atributos: atributos.atributos,
-        loading: loading.atributos
+        pericias: pericias.pericias,
+        loading: loading.pericias
     }
 }
 
-export default connect(mapStateToProps, null)(Atributos)
+export default connect(mapStateToProps, null)(Pericias)

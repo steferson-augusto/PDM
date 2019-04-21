@@ -7,7 +7,7 @@ import { StatusBar, I18nManager, AsyncStorage } from 'react-native'
 import { Provider as PaperProvider, DarkTheme, DefaultTheme } from 'react-native-paper'
 import createReactContext from 'create-react-context'
 
-import ButtomNavigationExample from './src/BottomNavigationExample'
+import BottomNavigation from './src/BottomNavigation'
 import storeComfig from './src/store/storeConfig'
 
 const store = storeComfig()
@@ -39,10 +39,6 @@ export default class PaperExample extends React.Component {
     }
   }
 
-  async componentWillMount() {
-
-  }
-
   render() {
     return (
       <Provider store={store}>
@@ -55,7 +51,7 @@ export default class PaperExample extends React.Component {
               isDarkTheme: this.state.theme === DarkTheme,
             }}
           >
-            <ButtomNavigationExample
+            <BottomNavigation
               persistenceKey={
                 process.env.NODE_ENV !== 'production'
                   ? 'NavigationStateDEV'

@@ -3,8 +3,6 @@ import { UPDATE_ATRIBUTOS, FIRE_ATRIBUTOS } from '../actions/actionTypes'
 
 const initialState = {
     atributos: [],
-    labels: [],
-    icons: [],
 }
 
 const reducer = (state = initialState, action) => {
@@ -13,8 +11,6 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 atributos: action.payload.atributos,
-                labels: action.payload.labels,
-                icons: action.payload.icons, 
             }
         case FIRE_ATRIBUTOS:
             attrFire.update({

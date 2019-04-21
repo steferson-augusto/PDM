@@ -2,57 +2,64 @@ import React from 'react'
 import { ScrollView, View, StyleSheet } from 'react-native'
 import { Button, Portal, Dialog } from 'react-native-paper'
 import { connect } from 'react-redux'
-import { fire } from './store/actions/atributo'
-import { loadingAtributos } from './store/actions/loading'
+import { fire } from '../store/actions/pericia'
+import { loadingPericias } from '../store/actions/loading'
 
-class DialogAtributos extends React.Component {
+class DialogPericias extends React.Component {
     state = {
         checked: 'normal',
         visible: false,
     }
 
     up = () => {
-        let { atributos, dado, indice } = this.props
-        atributos[indice].dados[dado]++
-        this.save(atributos)
+        let { pericias, dado, indice } = this.props
+        pericias[indice].dados[dado]++
+        this.save(pericias)
     }
 
     down = () => {
-        let { atributos, dado, indice } = this.props
-        atributos[indice].dados[dado]--
-        this.save(atributos)
+        let { pericias, dado, indice } = this.props
+        pericias[indice].dados[dado]--
+        this.save(pericias)
     }
 
     add = () => {
-        let { atributos, indice } = this.props
-        atributos[indice].dados.push(0)
-        this.save(atributos)
+        let { pericias, indice } = this.props
+        pericias[indice].dados.push(0)
+        this.save(pericias)
         this.props.close()
     }
 
     del = () => {
-        let { atributos, dado, indice } = this.props
-        atributos[indice].dados.splice(dado, 1)
-        this.save(atributos)
+        let { pericias, dado, indice } = this.props
+        pericias[indice].dados.splice(dado, 1)
+        this.save(pericias)
         this.props.close()
     }
 
-    save(atributos) {
-        this.props.loadingAtributos(true)
-        this.props.onFire(atributos)
+    rmv = () => {
+        let { pericias, indice } = this.props
+        pericias.splice(indice, 1)
+        this.save(pericias)
+        this.props.close()
+    }
+
+    save(pericias) {
+        this.props.loadingPericias(true)
+        this.props.onFire(pericias)
     }
 
     render() {
-        const { close, visible, dado, indice, atributos } = this.props
+        const { close, visible, dado, indice, pericias } = this.props
         const dados = ['d4', 'd6', 'd8', 'd10', 'd12', 'd12 +1', 'd12 +2', 'd12 +3', 'd12 +4', 'd12 +5', 'd12 +6']
-        const arr = atributos[indice].dados
+        const arr = pericias[indice].dados
         const valor = arr[dado]
         const atual = dados[valor]
         return (
             <Portal>
                 <Dialog onDismiss={close} visible={visible}>
-                    <Dialog.Title style={styles.title}> {atributos[indice].label}: {atual} </Dialog.Title>
-                    <Dialog.ScrollArea style={{ maxHeight: 180, paddingHorizontal: 0 }}>
+                    <Dialog.Title style={styles.title}> {pericias[indice].label}: {atual} </Dialog.Title>
+                    <Dialog.ScrollArea style={{ maxHeight: 220, paddingHorizontal: 0 }}>
                         <ScrollView>
                             <View style={styles.container}>
                                 <Button icon="keyboard-arrow-up" mode="outlined"
@@ -68,6 +75,9 @@ class DialogAtributos extends React.Component {
                                 </Button>
                                 <Button icon="remove" mode="outlined" onPress={this.del} disabled={arr.length <= 0}>
                                     Remover dado
+                                </Button>
+                                <Button icon="delete" mode="outlined" onPress={this.rmv}>
+                                    Excluir perícia
                                 </Button>
                             </View>
                         </ScrollView>
@@ -95,17 +105,17 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapStateToProps = ({ atributos }) => {
+const mapStateToProps = ({ pericias }) => {
     return {
-        atributos: atributos.atributos
+        pericias: pericias.pericias,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFire: atributos => dispatch(fire(atributos)),
-        loadingAtributos: loading => dispatch(loadingAtributos(loading)),
+        onFire: pericias => dispatch(fire(pericias)),
+        loadingPericias: loading => dispatch(loadingPericias(loading)),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DialogAtributos)
+export default connect(mapStateToProps, mapDispatchToProps)(DialogPericias)
