@@ -1,6 +1,6 @@
 import React from 'react'
-import { ScrollView, View, StyleSheet } from 'react-native'
-import { Button, Portal, Dialog, TextInput, HelperText, Menu } from 'react-native-paper'
+import { ScrollView, View, StyleSheet, Text } from 'react-native'
+import { Button, Portal, Dialog, TextInput, HelperText, Menu, Colors } from 'react-native-paper'
 import { connect } from 'react-redux'
 import { fire } from '../store/actions/item'
 import { loadingItens } from '../store/actions/loading'
@@ -34,7 +34,7 @@ class DialogItem extends React.Component {
         if (obj) {
             selecionado.label = obj.label
             selecionado.indice = armazem
-            if (obj.itens[indice]){
+            if (obj.itens[indice]) {
                 nome = obj.itens[indice].nome
                 peso = obj.itens[indice].peso
                 qtd = obj.itens[indice].qtd
@@ -71,11 +71,22 @@ class DialogItem extends React.Component {
         }
     }
 
+    del = () => {
+        let { armazens, armazem, indice } = this.props
+        console.log('removendo')
+        armazens[armazem].itens.splice(indice, 1)
+        this.props.loadingItens(true)
+        this.props.onFire(armazens)
+        this.setState({ nome: '', qtd: 1, peso: 0 })
+        this.props.close()
+    }
+
     render() {
         const { close, visible, indice, armazens } = this.props
         const { error, error2 } = this.state
         const title = indice >= 0 ? "EDITAR ITEM" : "ADICIONAR ITEM"
         const button = indice >= 0 ? "SALVAR" : "ADICIONAR"
+        
         return (
             <Portal>
                 <Dialog onDismiss={close} visible={visible} style={{ marginTop: "-50%" }}>
@@ -122,7 +133,7 @@ class DialogItem extends React.Component {
                                     onDismiss={() => this.setState({ menu: false })}
                                     anchor={
                                         <Button onPress={() => this.setState({ menu: true })}
-                                        mode="outlined" style={styles.menu}>
+                                            mode="outlined" style={styles.menu}>
                                             {this.state.selecionado.label}
                                         </Button>
                                     }
@@ -130,15 +141,21 @@ class DialogItem extends React.Component {
                                     {armazens.map((arm, i) => {
                                         return (
                                             <Menu.Item
-                                                onPress={() => this.setState({menu: false, selecionado: {label: arm.label, indice: i}})}
+                                                onPress={() => this.setState({ menu: false, selecionado: { label: arm.label, indice: i } })}
                                                 title={arm.label} key={i}
                                             />
                                         )
                                     })}
                                 </Menu>
+                                {indice >= 0 && 
+                                    <Button mode="contained" onPress={() => this.del()} style={styles.button} color={Colors.red500}>
+                                        EXCLUIR
+                                    </Button>
+                                }
                                 <Button mode="contained" onPress={() => this.add()} style={styles.button}>
                                     {button}
                                 </Button>
+
                             </View>
                         </ScrollView>
                     </Dialog.ScrollArea>
@@ -170,7 +187,7 @@ const styles = StyleSheet.create({
         width: 250,
     },
     button: {
-        width: 130,
+        width: 105,
         marginTop: 15
     }
 })
