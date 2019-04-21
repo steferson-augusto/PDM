@@ -7,7 +7,6 @@ import DialogNewPericia from './DialogNewPericia'
 
 class Pericias extends React.Component {
     state = {
-        expanded: true,
         visible: false,
         visibleNew: false,
         dado: null,
@@ -17,8 +16,6 @@ class Pericias extends React.Component {
             text: ''
         }
     }
-
-    _handlePress = () => this.setState({ expanded: !this.state.expanded })
 
     _openDialogNew = () => this.setState({ visibleNew: true })
 
@@ -40,6 +37,12 @@ class Pericias extends React.Component {
                             style={{ marginRight: 16 }}
                         />
                     }
+                    <FAB
+                        style={styles.fab}
+                        small
+                        icon="add"
+                        onPress={() => this._openDialogNew()}
+                    />
                 </Appbar.Header>
                 <View style={{ minHeight: "87%" }}>
                     <FlatList
@@ -71,11 +74,6 @@ class Pericias extends React.Component {
                                 </List.Accordion>
                             )
                         }}
-                    />
-                    <FAB
-                        style={styles.fab}
-                        icon="add"
-                        onPress={() => this._openDialogNew()}
                     />
                     <DialogNewPericia visible={this.state.visibleNew} close={this._closeDialog} />
                     {this.state.visible &&
@@ -118,11 +116,8 @@ const styles = StyleSheet.create({
         marginLeft: 0,
     },
     fab: {
-        position: 'absolute',
-        margin: 16,
-        right: 0,
-        bottom: 0,
-        backgroundColor: Colors.green700
+        margin: 11,
+        backgroundColor: Colors.green300,
     },
 })
 

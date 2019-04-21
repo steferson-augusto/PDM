@@ -14,7 +14,7 @@ const reducer = (state = initialState, action) => {
             }
         case FIRE_ITENS:
             itemFire.update({
-                armazens: action.payload
+                armazem: action.payload
             })
             return state
         default:
