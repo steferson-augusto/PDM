@@ -84,8 +84,8 @@ class DialogItem extends React.Component {
     render() {
         const { close, visible, indice, armazens } = this.props
         const { error, error2 } = this.state
-        const title = indice >= 0 ? "EDITAR ITEM" : "ADICIONAR ITEM"
-        const button = indice >= 0 ? "SALVAR" : "ADICIONAR"
+        const title = (indice != null && indice >= 0) ? "EDITAR ITEM" : "ADICIONAR ITEM"
+        const button = (indice != null && indice >= 0) ? "SALVAR" : "ADICIONAR"
         
         return (
             <Portal>
@@ -147,7 +147,7 @@ class DialogItem extends React.Component {
                                         )
                                     })}
                                 </Menu>
-                                {indice >= 0 && 
+                                {(indice != null && indice >= 0) && 
                                     <Button mode="contained" onPress={() => this.del()} style={styles.button} color={Colors.red500}>
                                         EXCLUIR
                                     </Button>
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
         width: 250,
     },
     button: {
-        width: 105,
+        width: 115,
         marginTop: 15
     }
 })

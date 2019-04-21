@@ -54,7 +54,7 @@ class Itens extends React.Component {
                                             return (
                                                 <View key={i} style={styles.item}>
                                                     <List.Item title={it.nome}
-                                                        description={`Quantidade: ${it.qtd} - Peso unitário: ${it.peso}`}
+                                                        description={`Quantidade: ${it.qtd} - Peso unitário: ${it.peso} kg`}
                                                         titleEllipsizeMode='middle'
                                                         onPress={() => this.setState({ visibleItem: true, armazem: index, item: i })}
                                                     />
@@ -62,12 +62,19 @@ class Itens extends React.Component {
                                                 </View>
                                             )
                                         })}
-                                        <FAB
-                                            style={styles.fab}
-                                            small
-                                            icon="add"
-                                            onPress={() => this.setState({ visibleItem: true, armazem: index, item: null })}
-                                        />
+                                        <View style={styles.containerFAB}>
+                                            <FAB small
+                                                style={[styles.fab, {backgroundColor: Colors.green700}]}
+                                                icon="add"
+                                                onPress={() => this.setState({ visibleItem: true, armazem: index, item: null })}
+                                            />
+                                            <FAB small 
+                                                style={[styles.fab, {backgroundColor: Colors.yellow500}]}
+                                                icon="create"
+                                                onPress={() => this.setState({ visibleArmazem: true, armazem: index })}
+                                            />
+                                        </View>
+                                        
                                     </View>
                                 </List.Accordion>
                             )
@@ -102,13 +109,16 @@ const styles = StyleSheet.create({
         color: "#999"
     },
     fab: {
-        backgroundColor: Colors.green700,
-        marginVertical: 9,
+        margin: 9,
     },
     fabHeader: {
         margin: 11,
         backgroundColor: Colors.green300,
     },
+    containerFAB: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+    }
 })
 
 const mapStateToProps = ({ itens, loading }) => {

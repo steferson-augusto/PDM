@@ -14,7 +14,7 @@ import Pericias from './pericias/Pericias'
 class BottomNavigationMenu extends React.Component {
   static title = 'Bottom Navigation'
   state = {
-    index: 2,
+    index: 0,
     routes: [
       {
         key: 'atributos',

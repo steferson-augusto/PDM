@@ -1,6 +1,6 @@
 import React from 'react'
 import { ScrollView, View, StyleSheet } from 'react-native'
-import { Button, Portal, Dialog, TextInput, HelperText, Menu } from 'react-native-paper'
+import { Button, Portal, Dialog, TextInput, HelperText, Colors } from 'react-native-paper'
 import { connect } from 'react-redux'
 import { fire } from '../store/actions/item'
 import { loadingItens } from '../store/actions/loading'
@@ -17,7 +17,7 @@ class DialogArmazem extends React.Component {
         const { armazens, armazem } = nextProps
         let label = ''
         if (armazens[armazem]) {
-            label = armazens[label]
+            label = armazens[armazem].label
         }
         this.setState({ label })
     }
@@ -40,11 +40,20 @@ class DialogArmazem extends React.Component {
         }
     }
 
+    del = () => {
+        let { armazens, armazem } = this.props
+        armazens.splice(armazem, 1)
+        this.props.loadingItens(true)
+        this.props.onFire(armazens)
+        this.setState({ label: '' })
+        this.props.close()
+    }
+
     render() {
-        const { close, visible, indice, armazens } = this.props
-        const { error, error2 } = this.state
-        const title = indice >= 0 ? "EDITAR ARMAZÉM" : "ADICIONAR ARMAZÉM"
-        const button = indice >= 0 ? "SALVAR" : "ADICIONAR"
+        const { close, visible, armazem } = this.props
+        const { error } = this.state
+        const title = (armazem != null && armazem >= 0) ? "EDITAR INVENTÁRIO" : "ADICIONAR INVENTÁRIO"
+        const button = (armazem != null && armazem >= 0) ? "SALVAR" : "ADICIONAR"
         return (
             <Portal>
                 <Dialog onDismiss={close} visible={visible} style={{ marginTop: "-50%" }}>
@@ -54,7 +63,7 @@ class DialogArmazem extends React.Component {
                             <View style={styles.container}>
                                 <TextInput style={styles.nome}
                                     label='Nome'
-                                    placeholder="Nome do armazém"
+                                    placeholder="Nome do inventário"
                                     mode='outlined'
                                     value={this.state.label}
                                     onChangeText={label => this.setState({ label })}
@@ -66,6 +75,11 @@ class DialogArmazem extends React.Component {
                                 >
                                     Tamanho mínimo de 4 caracteres
                                 </HelperText>
+                                {(armazem != null && armazem >= 0) &&
+                                    <Button mode="contained" onPress={() => this.del()} style={styles.button} color={Colors.red500}>
+                                        EXCLUIR
+                                    </Button>
+                                }
                                 <Button mode="contained" onPress={() => this.add()} style={styles.button}>
                                     {button}
                                 </Button>
@@ -94,7 +108,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     button: {
-        width: 130,
+        width: 115,
         marginTop: 15
     }
 })
