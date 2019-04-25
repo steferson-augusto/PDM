@@ -8,6 +8,7 @@ import { update as updatePericias } from './store/actions/pericia'
 import { update as updateItens } from './store/actions/item'
 import { loadingAtributos, loadingPericias, loadingItens } from './store/actions/loading'
 import Atributos from './atributos/Atributos'
+import Home from './home/Home'
 import Itens from './itens/Itens'
 import Pericias from './pericias/Pericias'
 
@@ -16,6 +17,11 @@ class BottomNavigationMenu extends React.Component {
   state = {
     index: 0,
     routes: [
+      {
+        key: 'home',
+        title: 'Home',
+        icon: 'home',
+      },
       {
         key: 'atributos',
         title: 'Atributos',
@@ -61,6 +67,7 @@ class BottomNavigationMenu extends React.Component {
         navigationState={this.state}
         onIndexChange={index => this.setState({ index })}
         renderScene={BottomNavigation.SceneMap({
+          home: Home,
           atributos: Atributos,
           pericias: Pericias,
           itens: Itens,
