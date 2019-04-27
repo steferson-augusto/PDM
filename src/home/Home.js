@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import AtributoHome from './AtributoHome'
 
 class Home extends React.Component {
-   
+
     render() {
         const { armazens, loadingAtributos, loadingPericias, loadingItens, atributos, pericias } = this.props
         return (
@@ -21,7 +21,13 @@ class Home extends React.Component {
                     }
                 </Appbar.Header>
                 <View style={styles.containerCard}>
-                    <AtributoHome></AtributoHome>
+                    <List.Accordion style={styles.container}
+                        title="Atributos"
+                        left={props => <List.Icon {...props} />}
+                    >
+                         <AtributoHome />
+                    </List.Accordion>
+                   
                 </View>
             </View>
         )
@@ -33,10 +39,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 11
+        paddingHorizontal: 11,
+        width: '100%',
     },
     container: {
-        alignItems: 'center',
+        width: 'auto',
+        height: 'auto',
+        minWidth: '100%'
     },
     item: {
         width: '100%'

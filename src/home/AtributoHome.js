@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, FlatList, StyleSheet } from 'react-native'
-import { List, Divider } from 'react-native-paper'
+import { List, Divider, Colors } from 'react-native-paper'
 import { connect } from 'react-redux'
 
 class AtributoHome extends React.Component {
@@ -25,7 +25,8 @@ class AtributoHome extends React.Component {
                         return (
                             <View>
                                 <List.Item title={`${item.label}: ${item.soma}`} titleEllipsizeMode='middle'
-                                    description={item.ds}
+                                    description={item.ds.substr(0,item.ds.length-2)}
+                                    left={props => <List.Icon {...props} color={Colors.indigo400} icon={item.icon} />}
                                 />
                                 <Divider />
                             </View>
@@ -36,6 +37,7 @@ class AtributoHome extends React.Component {
         )
     }
 }
+
 
 const styles = StyleSheet.create({
     containerCard: {
